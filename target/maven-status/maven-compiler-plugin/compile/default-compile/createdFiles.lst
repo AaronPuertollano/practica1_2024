@@ -1,0 +1,7 @@
+practica\dao\UserDAO.class
+practica\controlador\RegisterServ.class
+practica\controlador\PaintServ.class
+practica\controlador\LoginServ.class
+practica\dao\UserDAOInMemory.class
+practica\service\LoginService.class
+practica\model\User.class
