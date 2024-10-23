@@ -7,7 +7,7 @@
 
     <p>Name: </p>
 
-    <input type="text" name="username">
+    <input type="text" name="name">
 
     <p>Username: </p>
 

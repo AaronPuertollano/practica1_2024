@@ -36,6 +36,7 @@ public class RegisterServ extends HttpServlet {
         if (user == null){
             User newUser = new User(name,username,password);
             UserDAOInMemory.users.add(newUser);
+            System.out.println(users);
             resp.sendRedirect("/paint");
             return;
         }

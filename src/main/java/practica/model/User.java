@@ -8,6 +8,15 @@ public class User {
     String username;
     String password;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public User(String username, String password, String name) {
         this.username = username;
         this.password = password;
