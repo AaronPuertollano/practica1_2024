@@ -39,7 +39,8 @@ public class LoginServ extends HttpServlet {
         if (user != null && user.getUsername() != null) {
                 // Usuario y contraseña coinciden
                 HttpSession session = req.getSession();
-                session.setAttribute("user", user);  // Guardar el objeto User en la sesion
+                session.setAttribute("user", username);  // Guardar el objeto User en la sesion
+                System.out.println(username);
                 resp.sendRedirect("/paint");
                 return;
         } else {
