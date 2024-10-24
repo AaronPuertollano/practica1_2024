@@ -1,7 +1,13 @@
 C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\controlador\PaintServ.java
-C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\controlador\LoginServ.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\controlador\PerGaleryServ.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\controlador\PubGaleryServ.java
 C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\controlador\RegisterServ.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\dao\PaintDAO.java
 C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\model\User.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\model\Figure.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\model\Paint.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\controlador\LoginServ.java
+C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\dao\PaintDAOInMemory.java
 C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\service\LoginService.java
 C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\dao\UserDAOInMemory.java
 C:\Users\Usuario\Documents\Idea_pro2\aaron_practica_1\src\main\java\practica\dao\UserDAO.java

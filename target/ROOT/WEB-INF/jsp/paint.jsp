@@ -43,10 +43,10 @@
         <a href="/paint">PAINT</a>
     </h3>
     <h3>
-        <a href="/myGalery">MY GALERY</a>
+        <a href="/pergalery">MY GALERY</a>
     </h3>
     <h3>
-        <a href="/pubGalery">PUBLIC GALERY</a>
+        <a href="/pubgalery">PUBLIC GALERY</a>
     </h3>
 </header>
 

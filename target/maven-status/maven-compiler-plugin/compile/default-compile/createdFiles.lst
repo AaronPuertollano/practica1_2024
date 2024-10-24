@@ -1,7 +1,13 @@
 practica\dao\UserDAO.class
-practica\controlador\RegisterServ.class
 practica\controlador\PaintServ.class
-practica\controlador\LoginServ.class
+practica\controlador\PerGaleryServ.class
+practica\controlador\PubGaleryServ.class
+practica\dao\PaintDAO.class
 practica\dao\UserDAOInMemory.class
 practica\service\LoginService.class
+practica\model\Paint.class
+practica\controlador\RegisterServ.class
+practica\controlador\LoginServ.class
+practica\dao\PaintDAOInMemory.class
+practica\model\Figure.class
 practica\model\User.class
