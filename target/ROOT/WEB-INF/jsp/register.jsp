@@ -1,24 +1,43 @@
 <html>
 <body>
 
-    <h2>REGISTER USER</h2>
+    <style>
+        body{
+        background-color: bisque;
+        }
 
-<form method="post">
+        h2{
+            text-align: center;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
 
-    <p>Name: </p>
+        .form{
+            text-align: center;
+        }
+    </style>
 
-    <input type="text" name="name">
+<h2>REGISTER USER</h2>
 
-    <p>Username: </p>
+<div class="form">
+    <form method="post">
 
-    <input type="text" name="username">
+        <p>NAME</p>
 
-    <p>Password: </p>
+        <input type="text" name="name">
 
-    <input type="password" name="password">
-    <input type="submit" name="SEND">
+        <p>USERNAME</p>
 
-</form>
+        <input type="text" name="username">
+
+        <p>PASSWORD (min 5 words)</p>
+
+        <input type="password" name="password">
+        <p></p>
+        <input type="submit" name="SEND">
+
+    </form>
+</div>
 
 </body>
 </html>

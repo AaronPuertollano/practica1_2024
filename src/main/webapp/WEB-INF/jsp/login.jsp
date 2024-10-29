@@ -1,20 +1,38 @@
 <html>
 <body>
 
+    <style>
+        body{
+        background-color: bisque;
+        }
+
+        h2{
+            text-align: center;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+
+        .form{
+            text-align: center;
+        }
+    </style>
+
     <h2>LOGIN</h2>
 
-<form method="post">
+    <div class="form">
+        <form method="post">
 
-    <p>Username: </p>
+            <p>USERNAME</p>
 
-    <input type="text" name="username">
+            <input type="text" name="username">
 
-    <p>Password: </p>
+            <p>PASSWORD</p>
 
-    <input type="password" name="password">
-    <input type="submit" name="SEND">
+            <input type="password" name="password">
+            <p> </p>
+            <input type="submit" name="SEND">
 
-</form>
-
+        </form>
+    </div>
 </body>
 </html>
