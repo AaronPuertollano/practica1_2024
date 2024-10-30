@@ -32,6 +32,30 @@ public class RegisterServ extends HttpServlet {
         String password = req.getParameter("password");
         String name = req.getParameter("name");
 
+        String regex = "^[a-zA-Z0-9_-]+$";
+
+        if (password == null || password.length() <= 5) {
+            System.out.println("The password need 6 or more characters.");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+            requestDispatcher.forward(req, resp);
+            return;
+        }
+
+        if (username.contains(" ")) {
+            System.out.println("The username should not have spaces.");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+            requestDispatcher.forward(req, resp);
+            return;
+        }
+
+        if (!name.matches(regex) || !username.matches(regex) || !password.matches(regex)) {
+            System.out.println("Only letters, numbers and hyphens are allowed.");
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+            requestDispatcher.forward(req, resp);
+            return;
+        }
+
         User user = LoginService.checkUser(username,password);
 
         if (user == null){
