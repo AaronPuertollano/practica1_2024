@@ -26,7 +26,6 @@ public class PaintServ extends HttpServlet {
         }
 
 
-
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/paint.jsp");
         requestDispatcher.forward(req, resp);
     }

@@ -8,7 +8,7 @@ public class Figure {
     int x, y;  // coordenadas de la figura en el canvas
     boolean filled;
 
-    public Figure(String type, String color, int size, int x, int y, boolean filled) {
+    public Figure(String type, int x, int y, int size, String color, boolean filled) {
         this.type = type;
         this.color = color;
         this.size = size;
