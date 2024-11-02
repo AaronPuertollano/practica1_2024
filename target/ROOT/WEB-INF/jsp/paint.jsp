@@ -34,6 +34,7 @@
 
             header h3 {
                 margin: 0;
+                font-weight: normal;
             }
 
             canvas{
@@ -72,10 +73,10 @@
             <a href="/paint">PAINT</a>
         </h3>
         <h3>
-            <a href="/pergalery">MY GALERY</a>
+            <a href="/pergalery">MY GALLERY</a>
         </h3>
         <h3>
-            <a href="/pubgalery">PUBLIC GALERY</a>
+            <a href="/pubgalery">PUBLIC GALLERY</a>
         </h3>
     </header>
 
@@ -321,7 +322,7 @@ canvas.addEventListener("mouseout", stopDrawing);
 
 function handleSaveDrawing() {
     const drawingName = document.getElementById("namepaint").value;
-    const shapesData = JSON.stringify(shapes);  // Convert shapes to JSON string
+    const shapesData = JSON.stringify(shapes);
 
     if (!drawingName || shapes.length === 0) {
         alert("Please provide a name and add at least one shape before saving.");
@@ -333,21 +334,23 @@ function handleSaveDrawing() {
     formData.append("name", drawingName);
     formData.append("drawingData", shapesData);
 
-    fetch("/save-drawing", {
+    console.log("Name:", drawingName);
+    console.log("Shapes Data:", shapesData);
+
+    fetch("/paint", {
         method: "POST",
         body: formData,
     })
-    .then(response => response.json())  // Asume que el servidor responde con JSON
+    .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("Drawing saved successfully!");
+            alert("Drawing saved!");
         } else {
-            alert("There was an error saving your drawing.");
+            alert("Server error: " + data.message);
         }
     })
     .catch(error => {
-        console.error("Error:", error);
-        alert("Could not connect to the server.");
+        alert("Failed to connect to the server.");
     });
 }
 

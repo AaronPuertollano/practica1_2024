@@ -3,21 +3,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Paint {
-    private List<Figure> figures;
+    //private List<Figure> figures;
 
-    public Paint() {
-        this.figures = new ArrayList<>();
+    private String name;
+    private String data;
+    private String owner;
+
+    @Override
+    public String toString() {
+        return "Paint{" +
+                "name='" + name + '\'' +
+                ", data='" + data + '\'' +
+                ", owner='" + owner + '\'' +
+                '}';
     }
 
-    public void addFigure(Figure figure) {
-        figures.add(figure);
+    public Paint(String name, String data, String owner) {
+        this.name = name;
+        this.data = data;
+        this.owner = owner;
     }
 
-    public List<Figure> getFigures() {
-        return figures;
+    public String getName() {
+        return name;
     }
 
-    public void clearPaint() {
-        figures.clear();
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

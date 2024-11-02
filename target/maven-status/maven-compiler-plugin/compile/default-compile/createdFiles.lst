@@ -1,4 +1,5 @@
 practica\dao\UserDAO.class
+practica\service\PaintService.class
 practica\controlador\PaintServ.class
 practica\controlador\PerGaleryServ.class
 practica\controlador\PubGaleryServ.class
@@ -9,5 +10,6 @@ practica\model\Paint.class
 practica\controlador\RegisterServ.class
 practica\controlador\LoginServ.class
 practica\dao\PaintDAOInMemory.class
+practica\model\Canvas.class
 practica\model\Figure.class
 practica\model\User.class
