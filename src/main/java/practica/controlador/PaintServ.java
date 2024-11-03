@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/paint")
 public class PaintServ extends HttpServlet {
@@ -39,23 +41,44 @@ public class PaintServ extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            String name = req.getParameter("name");
-            String drawingData = req.getParameter("drawingData");
+
+            // Lee el JSON del cuerpo de la solicitud
+            BufferedReader reader = req.getReader();
+            StringBuilder jsonBuilder = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
+
+            // Convierte el JSON a un objeto
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> dataMap = mapper.readValue(jsonBuilder.toString(), Map.class);
+
+            // Obtén los valores de "name" y "drawingData" desde el JSON
+            String name = dataMap.get("name");
+            String drawingData = dataMap.get("drawingData");
 
             System.out.println("Received name: " + name);
             System.out.println("Received drawingData: " + drawingData);
 
             HttpSession session = req.getSession();
-            //User user = (User) session.getAttribute("user");
             String user = (String) session.getAttribute("user");
 
             // Crear objeto `Paint` y guardarlo
-            Paint paint = new Paint(name, drawingData ,user);
+            Paint paint = new Paint(name, drawingData, user);
+            boolean success = paintService.savePaint(paint);
 
-            System.out.println(paint);
+            // Configura la respuesta JSON
+            resp.setContentType("application/json");
+            if (success) {
+                resp.getWriter().write("{\"success\": true, \"message\": \"Drawing saved successfully.\"}");
+            } else {
+                resp.getWriter().write("{\"success\": false, \"message\": \"Failed to save drawing.\"}");
+            }
 
         } catch (Exception e) {
-            e.printStackTrace();  // Esto imprimirá la excepción en el log
+            e.printStackTrace();
             resp.setContentType("application/json");
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write("{\"success\": false, \"message\": \"Server error: " + e.getMessage() + "\"}");

@@ -319,7 +319,6 @@ canvas.addEventListener("mousemove", (event) => {
 canvas.addEventListener("mouseup", stopDrawing);
 canvas.addEventListener("mouseout", stopDrawing);
 
-
 function handleSaveDrawing() {
     const drawingName = document.getElementById("namepaint").value;
     const shapesData = JSON.stringify(shapes);
@@ -339,7 +338,8 @@ function handleSaveDrawing() {
 
     fetch("/paint", {
         method: "POST",
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: drawingName, drawingData: shapesData }),
     })
     .then(response => response.json())
     .then(data => {
