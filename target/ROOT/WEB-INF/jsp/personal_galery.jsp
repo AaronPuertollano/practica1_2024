@@ -1,3 +1,6 @@
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <body>
     <style>
@@ -76,33 +79,38 @@
         <!-- Aquí se insertarán las imágenes de la galería personal -->
     </div>
 
-<script>
+<script type="application/json" id="datajson">
+        ${userPaintsJson}
+    </script>
 
-    const galleryData = [
-        { name: "Sunset", owner: "User123" },
-        { name: "Mountains", owner: "User123" },
-        { name: "Beach", owner: "User123" }
-    ];
+             <script>
+                // Obtener el JSON embebido en la página
+            const jsonData = document.getElementById('datajson').textContent.trim(); // Asegurarse de que no haya espacios en blanco
 
-    const galleryContainer = document.getElementById("gallery-container");
+            try {
 
-    function renderGallery(data) {
-        data.forEach(item => {
-            const galleryItem = document.createElement("div");
-            galleryItem.classList.add("gallery-item");
+                const galleryItems = JSON.parse(jsonData);
+                console.log("Datos de la galería parseados:", galleryItems); // Verificación en consola
+                const galleryContainer = document.getElementById('gallery-container');
 
-            galleryItem.innerHTML = `
-                <h4>${item.name}</h4>
-                <p>Owner: ${item.owner}</p>
-            `;
+                galleryItems.forEach(paint => {
 
-            galleryContainer.appendChild(galleryItem);
-        });
-    }
+                    console.log("Elemento paint:", paint);
 
-    renderGallery(galleryData);
+                    const galleryItem = document.createElement('div');
+                    galleryItem.classList.add('gallery-item');
 
-</script>
+                    galleryItem.innerHTML = `
+                        <h3>Name: \${paint.name}</h3>
+                        <p>Owner: \${paint.owner}</p>
+                    `;
+
+                    galleryContainer.appendChild(galleryItem);
+                });
+            } catch (error) {
+                console.error("Error al parsear JSON o al generar el HTML:", error);
+            }
+            </script>
 
 </body>
 </html>

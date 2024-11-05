@@ -328,13 +328,10 @@ function handleSaveDrawing() {
         return;
     }
 
-    // Crear el objeto FormData para enviar los datos
+    // Cream el objete FormData
     const formData = new FormData();
     formData.append("name", drawingName);
     formData.append("drawingData", shapesData);
-
-    console.log("Name:", drawingName);
-    console.log("Shapes Data:", shapesData);
 
     fetch("/paint", {
         method: "POST",

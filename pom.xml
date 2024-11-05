@@ -45,6 +45,18 @@
       <version>2.15.0</version> <!-- Verifica la última versión en el repositorio de Maven Central -->
     </dependency>
 
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <!-- JSTL API -->
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>jstl-api</artifactId>
+      <version>1.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>

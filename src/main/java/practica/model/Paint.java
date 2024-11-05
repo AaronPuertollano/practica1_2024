@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Paint {
-    //private List<Figure> figures;
 
     private String name;
     private String data;

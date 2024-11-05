@@ -1,5 +1,9 @@
 package practica.controlador;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import practica.model.Paint;
+import practica.service.PaintService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,9 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/pergalery")
 public class PerGaleryServ extends HttpServlet {
+
+    private PaintService paintService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        this.paintService = PaintService.getInstance(); // Usa el Singleton para mantener una única instancia
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,6 +36,14 @@ public class PerGaleryServ extends HttpServlet {
             resp.sendRedirect("/register");
             return;
         }
+
+        // Obtener solo los dibujos del usuario actual
+        List<Paint> userPaints = paintService.getPaintsByOwner(nameUser);
+        System.out.println("Dibujos del usuario: " + userPaints);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String userPaintsJson = mapper.writeValueAsString(userPaints);
+        req.setAttribute("userPaintsJson", userPaintsJson);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/personal_galery.jsp");
         requestDispatcher.forward(req, resp);

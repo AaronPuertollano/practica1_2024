@@ -20,7 +20,9 @@ import java.util.Map;
 
 @WebServlet("/paint")
 public class PaintServ extends HttpServlet {
-    private PaintService paintService = new PaintService();
+
+    private PaintService paintService = PaintService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -42,7 +44,6 @@ public class PaintServ extends HttpServlet {
 
         try {
 
-            // Lee el JSON del cuerpo de la solicitud
             BufferedReader reader = req.getReader();
             StringBuilder jsonBuilder = new StringBuilder();
             String line;
@@ -51,11 +52,10 @@ public class PaintServ extends HttpServlet {
                 jsonBuilder.append(line);
             }
 
-            // Convierte el JSON a un objeto
+            // Convirteix el JSON a un objete
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> dataMap = mapper.readValue(jsonBuilder.toString(), Map.class);
 
-            // Obtén los valores de "name" y "drawingData" desde el JSON
             String name = dataMap.get("name");
             String drawingData = dataMap.get("drawingData");
 
@@ -65,11 +65,11 @@ public class PaintServ extends HttpServlet {
             HttpSession session = req.getSession();
             String user = (String) session.getAttribute("user");
 
-            // Crear objeto `Paint` y guardarlo
+            // Crear i guardam objecte paint
             Paint paint = new Paint(name, drawingData, user);
             boolean success = paintService.savePaint(paint);
 
-            // Configura la respuesta JSON
+            // Resposta JSON
             resp.setContentType("application/json");
             if (success) {
                 resp.getWriter().write("{\"success\": true, \"message\": \"Drawing saved successfully.\"}");
@@ -83,7 +83,6 @@ public class PaintServ extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write("{\"success\": false, \"message\": \"Server error: " + e.getMessage() + "\"}");
         }
-
 
     }
 }

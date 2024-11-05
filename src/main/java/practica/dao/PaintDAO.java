@@ -7,5 +7,7 @@ public interface PaintDAO {
 
     void save(Paint paint);
     void delete(int id);
+    List<Paint> getAllPaints();
+    List<Paint> getPaintsByOwner(String owner);
 
 }

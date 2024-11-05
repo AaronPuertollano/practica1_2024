@@ -2,9 +2,11 @@ package practica.dao;
 
 import practica.model.Paint;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PaintDAOInMemory implements PaintDAO{
 
@@ -19,13 +21,19 @@ public class PaintDAOInMemory implements PaintDAO{
 
     @Override
     public void delete(int id) {
-        // Elimina el dibujo del almacenamiento si existe
         storage.remove(id);
     }
 
-    // Métodos adicionales para obtener datos, si se necesitan
-    public Paint getPaintById(int id) {
-        return storage.get(id);
+    @Override
+    public List<Paint> getPaintsByOwner(String owner) {
+        return storage.values().stream()
+                .filter(paint -> paint.getOwner().equals(owner))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Paint> getAllPaints() {
+        return new ArrayList<>(storage.values());
     }
 
 }

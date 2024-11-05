@@ -1,13 +1,14 @@
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <body>
     <style>
-
         body {
             background-color: bisque;
             margin: 0;
             padding: 0;
         }
-
         header {
             display: flex;
             justify-content: center;
@@ -16,22 +17,18 @@
             margin: 20px 0 50px 0;
             padding: 10px;
         }
-
         header h3 {
             margin: 0;
             font-weight: normal;
         }
-
         a {
             text-decoration: none;
             color: #000;
             font-weight: bold;
         }
-
         h2 {
             text-align: center;
         }
-
         .gallery-container {
             display: flex;
             flex-wrap: wrap;
@@ -39,7 +36,6 @@
             gap: 20px;
             padding: 20px;
         }
-
         .gallery-item {
             background-color: #fff;
             border: 3px solid #000;
@@ -48,61 +44,53 @@
             text-align: center;
             transition: transform 0.2s;
         }
-
         .gallery-item:hover {
             transform: scale(1.05);
         }
-
     </style>
 
     <header>
-        <h3>
-            <a href="/login">LOGIN</a>
-        </h3>
-        <h3>
-            <a href="/paint">PAINT</a>
-        </h3>
-        <h3>
-            <a href="/pergalery">MY GALLERY</a>
-        </h3>
-        <h3>
-            <a href="/pubgalery">PUBLIC GALLERY</a>
-        </h3>
+        <h3><a href="/login">LOGIN</a></h3>
+        <h3><a href="/paint">PAINT</a></h3>
+        <h3><a href="/pergalery">MY GALLERY</a></h3>
+        <h3><a href="/pubgalery">PUBLIC GALLERY</a></h3>
     </header>
 
     <h2>Public Gallery</h2>
 
-    <div class="gallery-container" id="gallery-container">
-        <!-- Aquí se insertarán las imágenes de la galería personal -->
-    </div>
+    <div class="gallery-container" id="gallery-container"></div>
 
-<script>
+    <script type="application/json" id="datajson">
+        ${publicPaintsJson}
+    </script>
 
-    const galleryData = [
-        { name: "Sunset", owner: "User123" },
-        { name: "Mountains", owner: "User123" },
-        { name: "Beach", owner: "User123" }
-    ];
+         <script>
+// Obtener el JSON embebido en la página
+        const jsonData = document.getElementById('datajson').textContent.trim(); // Asegurarse de que no haya espacios en blanco
 
-    const galleryContainer = document.getElementById("gallery-container");
+        try {
 
-    function renderGallery(data) {
-        data.forEach(item => {
-            const galleryItem = document.createElement("div");
-            galleryItem.classList.add("gallery-item");
+            const galleryItems = JSON.parse(jsonData);
+            console.log("Datos de la galería parseados:", galleryItems); // Verificación en consola
+            const galleryContainer = document.getElementById('gallery-container');
 
-            galleryItem.innerHTML = `
-                <h4>${item.name}</h4>
-                <p>Owner: ${item.owner}</p>
-            `;
+            galleryItems.forEach(paint => {
 
-            galleryContainer.appendChild(galleryItem);
-        });
-    }
+                console.log("Elemento paint:", paint);
 
-    renderGallery(galleryData);
+                const galleryItem = document.createElement('div');
+                galleryItem.classList.add('gallery-item');
 
-</script>
+                galleryItem.innerHTML = `
+                    <h3>Name: \${paint.name}</h3>
+                    <p>Owner: \${paint.owner}</p>
+                `;
 
+                galleryContainer.appendChild(galleryItem);
+            });
+        } catch (error) {
+            console.error("Error al parsear JSON o al generar el HTML:", error);
+        }
+        </script>
 </body>
 </html>

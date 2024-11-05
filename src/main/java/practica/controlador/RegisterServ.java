@@ -19,8 +19,6 @@ import static practica.dao.UserDAOInMemory.users;
 public class RegisterServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
         requestDispatcher.forward(req, resp);
     }
@@ -34,6 +32,7 @@ public class RegisterServ extends HttpServlet {
 
         String regex = "^[a-zA-Z0-9_-]+$";
 
+        //Parametres per asegurar un acces segur
         if (password == null || password.length() <= 5) {
             System.out.println("The password need 6 or more characters.");
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
@@ -56,6 +55,7 @@ public class RegisterServ extends HttpServlet {
             return;
         }
 
+        //Una vegada comprovat que tots el praámetres son correctes es pot crear el ususari
         User user = LoginService.checkUser(username,password);
 
         if (user == null){
@@ -63,6 +63,7 @@ public class RegisterServ extends HttpServlet {
             UserDAOInMemory.users.add(newUser);
             System.out.println(users);
 
+            //Aquí cream la sessio actual amb el user creat
             HttpSession session = req.getSession();
             session.setAttribute("user", username);
             System.out.println(username);
