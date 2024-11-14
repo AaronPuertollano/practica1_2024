@@ -47,7 +47,7 @@
             background-color: #fff;
             border: 3px solid #000;
             overflow: hidden;
-            width: 200px;
+            width: 300px;
             text-align: center;
             transition: transform 0.2s;
         }
@@ -87,7 +87,77 @@
     </script>
 
     <script>
-            // Capturam el JSON
+
+    const drawRect = (x, y, w, h, color, filled) => {
+        ctx.beginPath();
+        if (filled) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, w, h);
+        } else {
+            ctx.strokeStyle = color;
+            ctx.rect(x, y, w, h);
+            ctx.stroke();
+        }
+    };
+
+    const drawCircle = (x, y, radius, color, filled) => {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        if (filled) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+        ctx.closePath();
+    };
+
+    const drawTriangle = (x, y, size, color, filled) => {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - size / 2, y + size);
+        ctx.lineTo(x + size / 2, y + size);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        if (filled) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+    };
+
+    const drawStar = (x, y, size, color, filled) => {
+        const points = 7;
+        const outerRadius = size;
+        const innerRadius = size / 2.5;
+        const angle = Math.PI / points;
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+
+        for (let i = 0; i < points * 2; i++) {
+            const radius = i % 2 === 0 ? outerRadius : innerRadius;
+            const px = x + radius * Math.cos(i * angle);
+            const py = y + radius * Math.sin(i * angle);
+            if (i === 0) {
+                ctx.moveTo(px, py);
+            } else {
+                ctx.lineTo(px, py);
+            }
+        }
+
+        ctx.closePath();
+        if (filled) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+    };
+
+         // Capturam el JSON
       const jsonData = document.getElementById('datajson').textContent.trim(); // Asegurarse de que no haya espacios en blanco
 
          try {
@@ -104,17 +174,43 @@
                  galleryItem.innerHTML = `
                      <h3>Name: \${paint.name}</h3>
                      <p>Owner: \${paint.owner}</p>
+                     <canvas width="280" height="280"></canvas>
                      <button class="delete-button" data-id="${paint.id}">Delete</button>
                  `;
 
                 const deleteButton = galleryItem.querySelector('.delete-button');
                 deleteButton.addEventListener('click', () => deletePaint(galleryItem, paint.id));
 
-                 galleryContainer.appendChild(galleryItem);
+                // Render the shapes on the canvas
+                const canvas = galleryItem.querySelector('canvas');
+                drawShapesOnCanvas(canvas, paint.data);
+
+                galleryContainer.appendChild(galleryItem);
              });
          } catch (error) {
              console.error("Error al parsear JSON:", error);
          }
+
+         function drawShapesOnCanvas(canvas, data) {
+                     const context = canvas.getContext('2d');
+                     const shapes = JSON.parse(data);
+
+                     shapes.forEach(shape => {
+                         context.fillStyle = shape.color;
+                         context.strokeStyle = shape.color;
+
+                         if (shape.type === 'square') {
+                             if (shape.filled) {
+                                 context.fillRect(shape.x, shape.y, shape.size, shape.size);
+                             } else {
+                                 context.strokeRect(shape.x, shape.y, shape.size, shape.size);
+                             }
+                         }
+
+                         // Añadir otros tipos de formas (si las hay) en condiciones adicionales:
+                         // if (shape.type === 'circle') { ... }
+                     });
+                 }
 
          function deletePaint(galleryItem, paintId) {
                  // Eliminar del DOM
