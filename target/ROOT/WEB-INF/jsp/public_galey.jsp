@@ -50,6 +50,7 @@
     </style>
 
     <header>
+        <h3><a href="/register">REGISTER</a></h3>
         <h3><a href="/login">LOGIN</a></h3>
         <h3><a href="/paint">PAINT</a></h3>
         <h3><a href="/pergalery">MY GALLERY</a></h3>
@@ -64,8 +65,8 @@
         ${publicPaintsJson}
     </script>
 
-         <script>
-// Obtener el JSON embebido en la página
+    <script>
+        // Capturam el JSON
         const jsonData = document.getElementById('datajson').textContent.trim(); // Asegurarse de que no haya espacios en blanco
 
         try {
@@ -91,6 +92,6 @@
         } catch (error) {
             console.error("Error al parsear JSON o al generar el HTML:", error);
         }
-        </script>
+    </script>
 </body>
 </html>

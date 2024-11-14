@@ -30,7 +30,7 @@ public class PaintServ extends HttpServlet {
         String nameUser= (String) session.getAttribute("user");
 
         if (nameUser == null){
-            //el ususari no esta autoritzar per veure la pagina
+            //el usuari no esta autoritzar per veure la pagina
             resp.sendRedirect("/register");
             return;
         }

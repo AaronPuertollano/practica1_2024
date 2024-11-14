@@ -67,6 +67,9 @@
 
     <header>
         <h3>
+            <a href="/register">REGISTER</a>
+        </h3>
+        <h3>
             <a href="/login">LOGIN</a>
         </h3>
         <h3>

@@ -21,7 +21,9 @@ public class UserDAOInMemory implements UserDAO{
         return null;  // Si no encuentra coincidencias, retorna null
     }
 
-
+    public static boolean usernameExists(String username) {
+        return users.stream().anyMatch(user -> user.getUsername().equals(username));
+    }
 
 }
 

@@ -30,14 +30,7 @@ public class LoginServ extends HttpServlet {
 
         User user = LoginService.checkUser(username,password);
 
-        if (user == null) {
-            System.out.println("Usuario no encontrado");
-        } else {
-            System.out.println("Usuario encontrado");
-        }
-
         if (user != null && user.getUsername() != null) {
-                // Usuario y contraseña coinciden
                 HttpSession session = req.getSession();
                 session.setAttribute("user", username);  // Guardar el objeto User en la sesion
                 System.out.println(username);

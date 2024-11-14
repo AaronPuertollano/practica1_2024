@@ -15,7 +15,7 @@ public class PaintDAOInMemory implements PaintDAO{
 
     @Override
     public void save(Paint paint) {
-        // Asigna un ID único y almacena el Paint en el almacenamiento en memoria
+        // Asigna un ID i es almacena
         storage.put(currentId++, paint);
     }
 

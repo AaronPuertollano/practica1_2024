@@ -32,14 +32,12 @@ public class PerGaleryServ extends HttpServlet {
         String nameUser= (String) session.getAttribute("user");
 
         if (nameUser == null){
-            //el ususari no esta autoritzar per veure la pagina
+            //el usuari no esta autoritzar per veure la pagina
             resp.sendRedirect("/register");
             return;
         }
 
-        // Obtener solo los dibujos del usuario actual
         List<Paint> userPaints = paintService.getPaintsByOwner(nameUser);
-        System.out.println("Dibujos del usuario: " + userPaints);
 
         ObjectMapper mapper = new ObjectMapper();
         String userPaintsJson = mapper.writeValueAsString(userPaints);
@@ -47,5 +45,26 @@ public class PerGaleryServ extends HttpServlet {
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/personal_galery.jsp");
         requestDispatcher.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        if ("delete".equals(action)) {
+            int paintId = Integer.parseInt(req.getParameter("id"));
+
+            // Crida a PaintService
+            paintService.deletePaint(paintId);
+
+            List<Paint> userPaints = paintService.getPaintsByOwner((String) req.getSession().getAttribute("user"));
+            ObjectMapper mapper = new ObjectMapper();
+            String userPaintsJson = mapper.writeValueAsString(userPaints);
+            req.setAttribute("userPaintsJson", userPaintsJson);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/personal_galery.jsp");
+            requestDispatcher.forward(req, resp);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 }

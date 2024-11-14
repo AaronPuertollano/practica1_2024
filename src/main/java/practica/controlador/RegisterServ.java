@@ -55,6 +55,14 @@ public class RegisterServ extends HttpServlet {
             return;
         }
 
+        if (UserDAOInMemory.usernameExists(username)) {
+            System.out.println("The username is already taken.");
+            req.setAttribute("errorMessage", "The username is already taken.");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+            requestDispatcher.forward(req, resp);
+            return;
+        }
+
         //Una vegada comprovat que tots el praámetres son correctes es pot crear el ususari
         User user = LoginService.checkUser(username,password);
 
@@ -68,7 +76,7 @@ public class RegisterServ extends HttpServlet {
             session.setAttribute("user", username);
             System.out.println(username);
 
-            resp.sendRedirect("/paint");
+            resp.sendRedirect("/login");
             return;
         }
 

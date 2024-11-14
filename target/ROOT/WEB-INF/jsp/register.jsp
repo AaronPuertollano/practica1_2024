@@ -30,7 +30,7 @@
 
         <input type="text" name="username">
 
-        <p>PASSWORD (min 5 words)</p>
+        <p>PASSWORD</p>
 
         <input type="password" name="password">
         <p></p>

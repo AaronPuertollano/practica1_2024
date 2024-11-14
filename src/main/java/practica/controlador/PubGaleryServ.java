@@ -32,7 +32,7 @@ public class PubGaleryServ extends HttpServlet {
         String nameUser= (String) session.getAttribute("user");
 
         if (nameUser == null){
-            //el ususari no esta autoritzar per veure la pagina
+            //el usuari no esta autoritzar per veure la pagina
             resp.sendRedirect("/register");
             return;
         }
@@ -43,8 +43,6 @@ public class PubGaleryServ extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String publicPaintsJson = mapper.writeValueAsString(publicPaints);
         req.setAttribute("publicPaintsJson", publicPaintsJson);
-
-        System.out.println(publicPaintsJson);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/public_galey.jsp");
         requestDispatcher.forward(req, resp);

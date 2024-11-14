@@ -16,6 +16,10 @@ public class PaintService {
 
     }
 
+    public void deletePaint(int id) {
+        paintDAO.delete(id);
+    }
+
     public static PaintService getInstance() {
         if (instance == null) {
             instance = new PaintService();

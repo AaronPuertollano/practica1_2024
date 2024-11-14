@@ -60,6 +60,9 @@
 
     <header>
         <h3>
+            <a href="/register">REGISTER</a>
+        </h3>
+        <h3>
             <a href="/login">LOGIN</a>
         </h3>
         <h3>
@@ -79,38 +82,61 @@
         <!-- Aquí se insertarán las imágenes de la galería personal -->
     </div>
 
-<script type="application/json" id="datajson">
+    <script type="application/json" id="datajson">
         ${userPaintsJson}
     </script>
 
-             <script>
-                // Obtener el JSON embebido en la página
-            const jsonData = document.getElementById('datajson').textContent.trim(); // Asegurarse de que no haya espacios en blanco
+    <script>
+            // Capturam el JSON
+      const jsonData = document.getElementById('datajson').textContent.trim(); // Asegurarse de que no haya espacios en blanco
 
-            try {
+         try {
 
-                const galleryItems = JSON.parse(jsonData);
-                console.log("Datos de la galería parseados:", galleryItems); // Verificación en consola
-                const galleryContainer = document.getElementById('gallery-container');
+             const galleryItems = JSON.parse(jsonData);
+             console.log("Datos de la galería parseados:", galleryItems); // Verificación en consola
+             const galleryContainer = document.getElementById('gallery-container');
 
-                galleryItems.forEach(paint => {
+             galleryItems.forEach(paint => {
 
-                    console.log("Elemento paint:", paint);
+                 const galleryItem = document.createElement('div');
+                 galleryItem.classList.add('gallery-item');
 
-                    const galleryItem = document.createElement('div');
-                    galleryItem.classList.add('gallery-item');
+                 galleryItem.innerHTML = `
+                     <h3>Name: \${paint.name}</h3>
+                     <p>Owner: \${paint.owner}</p>
+                     <button class="delete-button" data-id="${paint.id}">Delete</button>
+                 `;
 
-                    galleryItem.innerHTML = `
-                        <h3>Name: \${paint.name}</h3>
-                        <p>Owner: \${paint.owner}</p>
-                    `;
+                const deleteButton = galleryItem.querySelector('.delete-button');
+                deleteButton.addEventListener('click', () => deletePaint(galleryItem, paint.id));
 
-                    galleryContainer.appendChild(galleryItem);
-                });
-            } catch (error) {
-                console.error("Error al parsear JSON o al generar el HTML:", error);
-            }
-            </script>
+                 galleryContainer.appendChild(galleryItem);
+             });
+         } catch (error) {
+             console.error("Error al parsear JSON:", error);
+         }
+
+         function deletePaint(galleryItem, paintId) {
+                 // Eliminar del DOM
+                 galleryItem.remove();
+
+                 // Realizar solicitud de eliminación al servidor
+                 fetch(`/pergalery`, {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                     body: `action=delete&id=${paintId}`
+                 })
+                 .then(response => {
+                     if (response.ok) {
+                         console.log(`Dibuix eliminat`);
+                     } else {
+                         console.error("Error al eliminar");
+                     }
+                 })
+                 .catch(error => console.error("Error en la solicitud:", error));
+             }
+
+    </script>
 
 </body>
 </html>
