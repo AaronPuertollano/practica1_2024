@@ -42,7 +42,6 @@ public class PerGaleryServ extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String userPaintsJson = mapper.writeValueAsString(userPaints);
         req.setAttribute("userPaintsJson", userPaintsJson);
-        System.out.println(userPaints);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/personal_galery.jsp");
         requestDispatcher.forward(req, resp);
