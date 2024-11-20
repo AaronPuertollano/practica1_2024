@@ -345,6 +345,7 @@ function handleSaveDrawing() {
     .then(data => {
         if (data.success) {
             alert("Drawing saved!");
+            clearCanvas();
         } else {
             alert("Server error: " + data.message);
         }
@@ -352,6 +353,13 @@ function handleSaveDrawing() {
     .catch(error => {
         alert("Failed to connect to the server.");
     });
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    shapes.length = 0;
+    updateShapeList();
+    document.getElementById("namepaint").value = "";
 }
 
     </script>
