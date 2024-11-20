@@ -345,7 +345,7 @@ function handleSaveDrawing() {
     .then(data => {
         if (data.success) {
             alert("Drawing saved!");
-            clearCanvas();
+            window.location.href = data.redirect;
         } else {
             alert("Server error: " + data.message);
         }
