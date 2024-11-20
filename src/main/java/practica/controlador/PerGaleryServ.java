@@ -42,6 +42,7 @@ public class PerGaleryServ extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String userPaintsJson = mapper.writeValueAsString(userPaints);
         req.setAttribute("userPaintsJson", userPaintsJson);
+        System.out.println(userPaintsJson);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/personal_galery.jsp");
         requestDispatcher.forward(req, resp);
@@ -50,19 +51,44 @@ public class PerGaleryServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
+
         if ("delete".equals(action)) {
-            int paintId = Integer.parseInt(req.getParameter("id"));
+            String name = req.getParameter("name");
 
-            // Crida a PaintService
-            paintService.deletePaint(paintId);
+            if (name == null || name.isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
 
-            List<Paint> userPaints = paintService.getPaintsByOwner((String) req.getSession().getAttribute("user"));
-            ObjectMapper mapper = new ObjectMapper();
-            String userPaintsJson = mapper.writeValueAsString(userPaints);
-            req.setAttribute("userPaintsJson", userPaintsJson);
+            HttpSession session = req.getSession(false);
+            if (session == null) {
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
 
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/personal_galery.jsp");
-            requestDispatcher.forward(req, resp);
+            String owner = (String) session.getAttribute("user");
+            if (owner == null) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
+
+            System.out.println(name);
+            System.out.println(owner);
+
+            try {
+
+                boolean deleted = paintService.deletePaintByNameAndOwner(name, owner);
+
+                if (deleted) {
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    resp.sendRedirect(req.getRequestURI());
+                } else {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                }
+            } catch (Exception e) {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                e.printStackTrace();
+            }
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }

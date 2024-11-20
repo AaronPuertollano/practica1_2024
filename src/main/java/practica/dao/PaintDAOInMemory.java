@@ -20,8 +20,9 @@ public class PaintDAOInMemory implements PaintDAO{
     }
 
     @Override
-    public void delete(int id) {
-        storage.remove(id);
+    public void delete(String name) {
+        // Buscar la entrada correspondiente al nombre y eliminarla
+        storage.entrySet().removeIf(entry -> entry.getValue().getName().equals(name));
     }
 
     @Override

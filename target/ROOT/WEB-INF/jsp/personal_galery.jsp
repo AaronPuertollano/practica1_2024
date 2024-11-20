@@ -169,11 +169,14 @@
                 <h3>Name: \${paint.name}</h3>
                 <p>Owner: \${paint.owner}</p>
                 <canvas width="600" height="400"></canvas>
-                <button class="delete-button" data-id="${paint.id}">Delete</button>
+                <button class="delete-button" data-name="\${paint.name}">Delete</button>
             `;
 
             const deleteButton = galleryItem.querySelector('.delete-button');
-            deleteButton.addEventListener('click', () => deletePaint(galleryItem, paint.id));
+            deleteButton.addEventListener('click', () => {
+                const name = deleteButton.getAttribute('data-name');
+                deletePaint(galleryItem, name);
+            });
 
             const canvas = galleryItem.querySelector('canvas');
             drawShapesOnCanvas(canvas, paint.data);
@@ -209,22 +212,32 @@
         });
     }
 
-    function deletePaint(galleryItem, paintId) {
-        galleryItem.remove();
-        fetch(`/pergalery`, {
+    function deletePaint(galleryItem, name) {
+        if (!name) {
+            console.error("El nombre del dibujo está vacío.");
+            return;
+        }
+
+        fetch('/pergalery', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `action=delete&id=${paintId}`
+            body: `action=delete&name=\${name}`
         })
         .then(response => {
             if (response.ok) {
-                console.log(`Dibuix eliminat`);
+                console.log(`Dibujo "\${name}" eliminado.`);
+                galleryItem.remove();
             } else {
-                console.error("Error al eliminar");
+                console.error("Error al eliminar el dibujo.");
             }
         })
-        .catch(error => console.error("Error en la solicitud:", error));
+        .catch(error => {
+            console.error("Error en la solicitud:", error);
+        });
     }
+
+
+
 </script>
 
 </body>

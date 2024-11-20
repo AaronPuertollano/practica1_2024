@@ -326,8 +326,8 @@ function handleSaveDrawing() {
     const drawingName = document.getElementById("namepaint").value;
     const shapesData = JSON.stringify(shapes);
 
-    if (!drawingName || shapes.length === 0) {
-        alert("Please provide a name and add at least one shape before saving.");
+    if (shapes.length === 0) {
+        alert("Please add at least one shape before saving.");
         return;
     }
 

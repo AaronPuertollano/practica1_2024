@@ -148,7 +148,7 @@
                     <h3>Name: \${paint.name}</h3>
                     <p>Owner: \${paint.owner}</p>
                     <canvas width="600" height="400"></canvas>
-                    <button class="delete-button" data-id="${paint.id}">Delete</button>
+                    <button class="delete-button" data-id="${paint.name}">Delete</button>
                 `;
 
                 const deleteButton = galleryItem.querySelector('.delete-button');

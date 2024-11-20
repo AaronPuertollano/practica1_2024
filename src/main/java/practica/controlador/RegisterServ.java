@@ -34,30 +34,28 @@ public class RegisterServ extends HttpServlet {
 
         //Parametres per asegurar un acces segur
         if (password == null || password.length() <= 5) {
-            System.out.println("The password need 6 or more characters.");
+            req.setAttribute("errorMess", "The password needs 6 or more characters.");
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
             requestDispatcher.forward(req, resp);
             return;
         }
 
         if (username.contains(" ")) {
-            System.out.println("The username should not have spaces.");
+            req.setAttribute("errorMess", "The username should not have spaces.");
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
             requestDispatcher.forward(req, resp);
             return;
         }
 
         if (!name.matches(regex) || !username.matches(regex) || !password.matches(regex)) {
-            System.out.println("Only letters, numbers and hyphens are allowed.");
-
+            req.setAttribute("errorMess", "Only letters, numbers and hyphens are allowed.");
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
             requestDispatcher.forward(req, resp);
             return;
         }
 
         if (UserDAOInMemory.usernameExists(username)) {
-            System.out.println("The username is already taken.");
-            req.setAttribute("errorMessage", "The username is already taken.");
+            req.setAttribute("errorMess", "The username is already taken.");
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
             requestDispatcher.forward(req, resp);
             return;

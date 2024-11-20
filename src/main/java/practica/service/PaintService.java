@@ -16,10 +16,6 @@ public class PaintService {
 
     }
 
-    public void deletePaint(int id) {
-        paintDAO.delete(id);
-    }
-
     public static PaintService getInstance() {
         if (instance == null) {
             instance = new PaintService();
@@ -36,6 +32,21 @@ public class PaintService {
             return false;
         }
     }
+
+
+
+    public boolean deletePaintByNameAndOwner(String name, String owner) {
+
+        List<Paint> paints = getPaintsByOwner(owner);
+        for (Paint paint : paints) {
+            if (paint.getName().equals(name)) {
+                paintDAO.delete(name); // Eliminar por nombre
+                return true;
+            }
+        }
+        return false; // No encontrado
+    }
+
 
     public List<Paint> getAllPaints() {
         return paintDAO.getAllPaints();

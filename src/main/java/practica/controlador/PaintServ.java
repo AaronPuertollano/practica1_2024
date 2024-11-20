@@ -59,6 +59,27 @@ public class PaintServ extends HttpServlet {
             String name = dataMap.get("name");
             String drawingData = dataMap.get("drawingData");
 
+            // Validacio de nom
+
+            if (name == null || name.trim().isEmpty()) {
+                int num = (int) (Math.random() * 9000);
+                name = "Random" + String.valueOf(num);
+            }
+
+            if (name.trim().isEmpty()) {
+                resp.setContentType("application/json");
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                System.out.println("Try another name.");
+                return;
+            }
+
+            if (!name.matches("^[a-zA-Z0-9_ ]+$")) {
+                resp.setContentType("application/json");
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                System.out.println("Invalid characters, try another name.");
+                return;
+            }
+
             System.out.println("Received name: " + name);
             System.out.println("Received drawingData: " + drawingData);
 
