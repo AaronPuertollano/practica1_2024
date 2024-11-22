@@ -93,7 +93,6 @@ public class PaintServ extends HttpServlet {
             // Resposta JSON
             resp.setContentType("application/json");
             if (success) {
-
                 resp.getWriter().write("{\"success\": true, \"redirect\": \"/pergalery\"}");
             } else {
                 resp.getWriter().write("{\"success\": false, \"message\": \"Failed to save drawing.\"}");
