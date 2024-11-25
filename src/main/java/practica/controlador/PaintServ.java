@@ -59,6 +59,8 @@ public class PaintServ extends HttpServlet {
             String name = dataMap.get("name");
             String drawingData = dataMap.get("drawingData");
 
+            //quiero que si hay uno con el mismo nombre (y mismo dueño) se borre al anterior
+
             // Validacio de nom
 
             if (name == null || name.trim().isEmpty()) {
@@ -93,7 +95,7 @@ public class PaintServ extends HttpServlet {
             // Resposta JSON
             resp.setContentType("application/json");
             if (success) {
-                resp.getWriter().write("{\"success\": true, \"redirect\": \"/pergalery\"}");
+                resp.getWriter().write("{\"success\": true, \"message\": \"Drawing saved successfully.\"}");
             } else {
                 resp.getWriter().write("{\"success\": false, \"message\": \"Failed to save drawing.\"}");
             }
