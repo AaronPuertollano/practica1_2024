@@ -37,4 +37,11 @@ public class PaintDAOInMemory implements PaintDAO{
         return new ArrayList<>(storage.values());
     }
 
+
+    @Override
+    public boolean namePaintExists(String name) {
+        return storage.values().stream()
+                .anyMatch(paint -> paint.getName().equals(name));
+    }
+
 }

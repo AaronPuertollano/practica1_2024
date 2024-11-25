@@ -47,6 +47,10 @@ public class PaintService {
         return false; // No encontrado
     }
 
+    public boolean namePaintExists(String name) {
+        return paintDAO.namePaintExists(name);
+    }
+
 
     public List<Paint> getAllPaints() {
         return paintDAO.getAllPaints();

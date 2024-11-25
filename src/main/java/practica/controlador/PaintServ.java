@@ -1,5 +1,6 @@
 package practica.controlador;
 
+import practica.dao.PaintDAOInMemory;
 import practica.model.Figure;
 import practica.model.Paint;
 import practica.model.User;
@@ -59,8 +60,6 @@ public class PaintServ extends HttpServlet {
             String name = dataMap.get("name");
             String drawingData = dataMap.get("drawingData");
 
-            //quiero que si hay uno con el mismo nombre (y mismo dueño) se borre al anterior
-
             // Validacio de nom
 
             if (name == null || name.trim().isEmpty()) {
@@ -82,11 +81,13 @@ public class PaintServ extends HttpServlet {
                 return;
             }
 
-            System.out.println("Received name: " + name);
-            System.out.println("Received drawingData: " + drawingData);
-
             HttpSession session = req.getSession();
             String user = (String) session.getAttribute("user");
+
+            //quiero que si hay uno con el mismo nombre (y mismo dueño) se borre al anterior
+            if (paintService.namePaintExists(name)){
+                paintService.deletePaintByNameAndOwner(name, user);
+            }
 
             // Crear i guardam objecte paint
             Paint paint = new Paint(name, drawingData, user);

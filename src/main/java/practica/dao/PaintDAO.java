@@ -9,5 +9,6 @@ public interface PaintDAO {
     void delete(String name);
     List<Paint> getAllPaints();
     List<Paint> getPaintsByOwner(String owner);
+    boolean namePaintExists(String name);
 
 }
