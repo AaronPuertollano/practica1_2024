@@ -164,18 +164,27 @@
         galleryItems.forEach(paint => {
             const galleryItem = document.createElement('div');
             galleryItem.classList.add('gallery-item');
+            const paintDataString = JSON.stringify(paint.data);
 
             galleryItem.innerHTML = `
                 <h3>Name: \${paint.name}</h3>
                 <p>Owner: \${paint.owner}</p>
                 <canvas width="600" height="400"></canvas>
                 <button class="delete-button" data-name="\${paint.name}">Delete</button>
+                <button class="edit-button" data-paint="\${paint.name}">Edit</button>
             `;
 
             const deleteButton = galleryItem.querySelector('.delete-button');
             deleteButton.addEventListener('click', () => {
                 const name = deleteButton.getAttribute('data-name');
                 deletePaint(galleryItem, name);
+            });
+
+            // Botón Edit
+            const editButton = galleryItem.querySelector('.edit-button');
+            editButton.addEventListener('click', () => {
+                const data = editButton.getAttribute('data-paint');
+                editPaint(data);
             });
 
             const canvas = galleryItem.querySelector('canvas');
@@ -236,7 +245,10 @@
         });
     }
 
-
+    function editPaint(data) {
+        console.log(data);
+        window.location.href = `/paint?data=\${encodeURIComponent(data)}`;
+    }
 
 </script>
 

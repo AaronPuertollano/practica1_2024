@@ -154,6 +154,19 @@
     </div>
 
 <script>
+    // Extraer parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataN = urlParams.get('data');
+    const drawingName = dataN;
+
+    // Asignar el valor al campo de texto
+    if (drawingName) {
+        const nameInput = document.getElementById("namepaint");
+        if (nameInput) {
+            nameInput.value = drawingName;
+        }
+    }
+
     document.getElementById("saveButton").addEventListener("click", handleSaveDrawing);
 
     const canvas = document.getElementById("myCanvas");
@@ -271,6 +284,7 @@
                 updateShapeList();
                 redrawCanvas();
                 saveShapesToLocalStorage();
+                handleSaveDrawing();
             });
 
             editButton.addEventListener("click", () => {
@@ -287,6 +301,7 @@
                     shapes[index].size = newSize;
                     shapes[index].filled = newFill;
                     editingShapeIndex = null;
+                    handleSaveDrawing();
                 } else {
                     editMode(index); // Activa mode edició
 
@@ -374,15 +389,19 @@
             if (type === "square") {
                 drawRect(x, y, size, size, color, filled);
                 shapes.push({ type: "square", x, y, size, color, filled });
+                handleSaveDrawing();
             } else if (type === "circle") {
                 drawCircle(x, y, size / 2, color, filled);
                 shapes.push({ type: "circle", x, y, size, color, filled });
+                handleSaveDrawing();
             } else if (type === "triangle") {
                 drawTriangle(x, y, size, color, filled);
                 shapes.push({ type: "triangle", x, y, size, color, filled });
+                handleSaveDrawing();
             } else if (type === "star") {
                 drawStar(x, y, size, color, filled);
                 shapes.push({ type: "star", x, y, size, color, filled });
+                handleSaveDrawing();
             } else if (type === "selectshape") {
                 for (let i = shapes.length - 1; i >= 0; i--) {
                     const shape = shapes[i];
@@ -493,7 +512,6 @@
         shapes.length = 0;
         localStorage.removeItem("shapes");
         updateShapeList();
-
     });
 
     // Historial
