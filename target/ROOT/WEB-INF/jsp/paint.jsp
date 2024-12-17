@@ -452,7 +452,16 @@
 
 
     function handleSaveDrawing() {
-        const drawingName = document.getElementById("namepaint").value;
+        let drawingName = document.getElementById("namepaint").value;
+
+        // Generar un nombre aleatorio si está vacío
+            if (!drawingName || drawingName.trim() === "") {
+                const num = Math.floor(Math.random() * 9000);
+                drawingName = "Random" + num;
+                document.getElementById("namepaint").value = drawingName; // Asignar el nombre generado al input
+            }
+
+        console.log(drawingName);
         const shapesData = JSON.stringify(shapes);
 
         if (shapes.length === 0) {
